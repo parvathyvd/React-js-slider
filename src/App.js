@@ -5,21 +5,24 @@ function App() {
   const [people, setPeople] = useState(data);
   const [select, setSelect] = useState(0);
 
-  // useEffect(() => {
-  //   const lastSelect = people.length - 1;
-  //   if (select > lastSelect) {
-  //     setSelect(0);
-  //   }
-  //   if (select < 0) {
-  //     setSelect(lastSelect);
-  //   }
-  // }, [select, people]);
+  useEffect(() => {
+    const lastIndex = people.length - 1;
+    if (select < 0) {
+      setSelect(lastIndex);
+    }
+    if (select > lastIndex) {
+      setSelect(0);
+    }
+  }, [select, people]);
 
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     setSelect(select + 1);
-  //   }, 4000);
-  // }, [select]);
+  useEffect(() => {
+    let slider = setInterval(() => {
+      setSelect(select + 1);
+    }, 5000);
+    return () => {
+      clearInterval(slider);
+    };
+  }, [select]);
 
   const checkNumber = (number) => {
     if (number > people.length - 1) {
